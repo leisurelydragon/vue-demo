@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalable=no" />
+		<title>列表渲染</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<!--列表渲染(v-for)-->
+		<div id="listDiv">
+			<ul>
+				<!--数组类型渲染-->
+				<li v-for="item in listItem" :key="item.id">
+					{{item.content}}
+				</li>
+				<hr />
+				<!--数组类型带第二个参数-->
+				<li v-for="(item,index) of listItem">
+					{{item.content}}--{{index}}
+				</li>
+			</ul>
+		</div>
+		<hr />
+		<!--对象的v-for-->
+		<div id="objDiv">
+			<ul>
+				<!-- 普通属性迭代遍历-->
+				<li v-for="value in objEle">
+					{{value}}
+				</li>
+				<hr />
+				<!--带第二个参数的遍历-->
+				<li v-for="(value,key) in objEle">
+					{{key}}:{{value}}
+				</li>
+				<hr />
+				<!--带第三个参数的遍历-->
+				<li v-for="(value,key,index) in objEle">
+					{{index}}.{{key}}:{{value}}
+				</li>
+			</ul>
+		</div>
+		<hr />
+		<div id="spanDiv">
+			<span v-for="n in 10">{{n}}</span>
+		</div>
+		<script>
+			//数组遍历
+			new Vue({
+				el:'#listDiv',
+				data:{
+					listItem:[
+					{id:1,title:'子元素1',content:'危楼高百尺'},
+					{id:2,title:'子元素2',content:'手可摘星辰'},
+					{id:3,title:'子元素3',content:'不敢高声语'},
+					{id:4,title:'子元素4',content:'恐惊天上人'}
+					]
+				}
+			});
+			//对象遍历
+			new Vue({
+				el:'#objDiv',
+				data:{
+					objEle:{
+						gulp:'gulp',
+						grunt:'grunt',
+						nodejs:'nodejs',
+						vuejs:'vuejs'
+					}
+				}
+			});
+			new Vue({
+				el:'#spanDiv'
+			});
+		</script>
+	</body>
+</html>

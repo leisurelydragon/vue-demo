@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalable=no" />
+		<title>表单输入绑定</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<!-- 复选框-->
+		<div id="checkbox">
+			<!--普通复选框-->
+			<input type="checkbox" id="check" v-model="checked" />
+			<label for="check">{{checked}}</label>
+			<hr />
+			<!--多个复选框绑定到同一个数组-->
+			<input type="checkbox" id="ch1" value="item1" v-model="checkNames" />
+			<label for="ch1">item1</label>
+			<input type="checkbox" id="ch2" value="item2" v-model="checkNames" />
+			<label for="ch2">item2</label>
+			<input type="checkbox" id="ch1" value="item3" v-model="checkNames" />
+			<label for="ch3">item3</label>
+			<br />
+			<span>Checked names:{{checkNames}}</span>
+		</div>
+		<hr />
+		<!--单选框 -->
+		<div id="radioDiv">
+			<input type="radio" id="one" value="One" v-model="picked">
+			<label for="one">One</label>
+			<br>
+			<input type="radio" id="two" value="Two" v-model="picked">
+			<label for="two">Two</label>
+			<br>
+			<span>Picked: {{ picked }}</span>
+		</div>
+		<hr />
+		<!--选择框-->
+		<div id="selectDiv">
+			<!--单选-->
+		  <select v-model="selected">
+		    <option disabled value="">请选择</option>
+		    <option>A</option>
+		    <option>B</option>
+		    <option>C</option>
+		  </select>
+		  <span>Selected: {{ selected }}</span>
+		  <hr />
+		  <!--多选-->
+		  <select v-model="selectList" multiple style="width:50px;">
+		    <option disabled value="">请选择</option>
+		    <option>A</option>
+		    <option>B</option>
+		    <option>C</option>
+		  </select>
+		  <span>selectList: {{ selectList }}</span>
+		  <hr />
+		  <!--v-for渲染的动态项-->
+		  <!--select的子项默认绑定option的value,如果没有value则绑定option的text值-->
+		  <select v-model="dynamic">
+			  <option v-for="option in options" v-bind:value="option.value">
+			    {{ option.text }}
+			  </option>
+		  </select>
+		  <span>dynamic: {{ dynamic }}</span>
+		</div>
+		<script>
+			//复选框
+			new Vue({
+				el:'#checkbox',
+				data:{
+					checked:false,
+					checkNames:[]
+				}
+			});
+			
+			//单选框
+			new Vue({
+				el:'#radioDiv',
+				data:{
+					picked:''
+				}
+			});
+			
+			//选择框
+			new Vue({
+				el:'#selectDiv',
+				data:{
+					selected:'',
+					selectList:[],
+					dynamic:'',
+					options: [
+				      { text: 'One', value: 'A' },
+				      { text: 'Two', value: 'B' },
+				      { text: 'Three', value: 'C' }
+				    ]
+				}
+			});
+			
+			
+		</script>
+	</body>
+</html>

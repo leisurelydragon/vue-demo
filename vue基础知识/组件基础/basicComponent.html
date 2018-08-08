@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalable=no" />
+		<title>组件基础</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+		<style>
+			.demo-alert-box{
+				background-color: #bd3737;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="slotDiv">
+			<alert-box is-test>
+				slot info
+			</alert-box>
+		</div>
+		<hr />
+		<!--Prop使用-禁用特性继承-->
+		<div id="propDiv">
+			<base-input
+			  v-model="username"
+			  class="username-input"
+			  placeholder="Enter your username"
+			></base-input>
+		</div>
+		<script>
+			Vue.component('alert-box', {
+				props:['isTest'],
+			  template: `
+			    <div class="demo-alert-box">
+			      <strong>Error!</strong>
+			      <slot></slot>
+			      <span>{{isTest}}</span>
+			    </div>
+			  `
+			})
+			//插槽
+			var vm1=new Vue({
+				el:'#slotDiv'
+			});
+			
+			Vue.component('base-input', {
+			  inheritAttrs: false,
+			  props: ['label', 'value'],
+			  template: `
+			    <label>
+			      {{ label }}
+			      <input
+			        v-bind="$attrs"
+			        v-bind:value="value"
+			        v-on:input="$emit('input', $event.target.value)"
+			      >
+			      <span v-bind="$attrs"></span>
+			    </label>
+			  `
+			})
+			var vmProp=new Vue({
+				el:'#propDiv',
+				data:{
+					username:''
+				}
+			});
+			
+		</script>
+	</body>
+</html>

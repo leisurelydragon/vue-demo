@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>计算属性和监听器</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<!--计算属性(computed)-->
+		<div id="computer">
+			<input type="number" v-model.number="nowValue" />
+			<p>{{addValue}}</p>
+		</div>
+		<!--监听器(watch)-->
+		<div id="watch">
+			<input type="number" v-model.number="valOne" />
+			<p>{{valTwo}}</p>
+		</div>
+		<script>
+			new Vue({
+				el:'#computer',
+				data:{
+					nowValue:3
+				},
+				computed:{
+					addValue:function(){
+						return this.nowValue+2;
+					}
+				}
+			});
+			new Vue({
+				el:'#watch',
+				data:{
+					valOne:2,
+					valTwo:4
+				},
+				watch:{
+					valOne:function(){
+						this.valTwo=this.valOne*this.valOne;
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
