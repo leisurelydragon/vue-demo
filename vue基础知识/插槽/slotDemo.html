@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalable=no" />
+		<title>插槽基础</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div id="ususalSlot">
+			<!--在<template> 元素上使用 slot 特性以向具名插槽提供内容-->
+			<slot-comp>
+			  <template slot="header">
+			    <h1>Here might be a page title</h1>
+			  </template>
+			
+			  <p>A paragraph for the main content.</p>
+			  <p>And another one.</p>
+			
+			  <template slot="footer">
+			    <p>Here's some contact info</p>
+			  </template>
+			</slot-comp>
+			
+			<!--slot特性直接作用在普通元素上-->
+			<slot-comp>
+			  <h1 slot="header">Here might be a page title</h1>
+			
+			  <p>A paragraph for the main content.</p>
+			  <p>And another one.</p>
+			
+			  <p slot="footer">Here's some contact info</p>
+			</slot-comp>
+		</div>
+		
+		<!--作用域插槽-->
+		<div id="slotDiv">
+			<todo-list v-bind:todos='todos'>
+				<!-- 将 `slotProps` 定义为插槽作用域的名字 -->
+				<!--使用插槽作用域时会覆盖模板中原先定义的插槽-->
+				  <template slot-scope="slotProps">
+				    <!-- 为待办项自定义一个模板，-->
+				    <!-- 通过 `slotProps` 定制每个待办项。-->
+				    <span v-if="slotProps.todo.isComplete">✓</span>
+				    {{ slotProps.todo.text }}
+				  </template>
+			</todo-list>
+		</div>
+		<script>
+			Vue.component('slot-comp',{
+				template:`
+				<div class="container">
+					<header>
+						<slot name="header"></slot>
+					</header>
+					<main>
+						<slot></slot>
+					</main>
+					<footer>
+						<slot name="footer"></slot>
+					</footer>
+				</div>
+				`
+			});
+			new Vue({
+				el:'#ususalSlot',
+				data:{
+					
+				}
+			});
+			
+			Vue.component('todo-list',{
+				props:['todos'],
+				template:`
+					<ul>
+					  <li
+					    v-for="todo in todos"
+					    v-bind:key="todo.id"
+					  >
+					    <!-- 我们为每个 todo 准备了一个插槽，-->
+					    <!-- 将 todo 对象作为一个插槽的 prop 传入。-->
+					    <slot v-bind:todo="todo">
+					      <!-- 回退的内容 -->
+					      {{ todo.text }}
+					    </slot>
+					  </li>
+					</ul>
+				`
+			});
+			new Vue({
+				el:'#slotDiv',
+				data:{
+					todos:[
+					{id:1,text:'唐',content:'t',isComplete:true},
+					{id:2,text:'诗',content:'s',isComplete:true},
+					{id:3,text:'三',content:'s',isComplete:false},
+					{id:4,text:'百',content:'b',isComplete:false},
+					{id:5,text:'首',content:'s',isComplete:true}
+					]
+				}
+			});
+		</script>
+	</body>
+</html>
