@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalabel=1" />
+		<title>class和style绑定</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+		<style>
+			.border{
+				border:1px solid lightblue;
+				padding:10px 0;
+			}
+			.red{
+				color: red;
+			}
+			.big{
+				font-size: 1.3em;
+			}
+			.bold{
+				font-weight: bolder;
+			}
+			.bg-gray{
+				background-color: gray;
+				color: #fff;
+			}
+			.bg-white{
+				background-color: #fff;
+				color: #000;
+			}
+			.radius{
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--绑定class(对象语法)-->
+		<div id="objectClass">
+			<p class="bg-gray" v-bind:class="{border:isBorder}">object绑定</p>
+			<p v-bind:class="compClass">计算属性方式绑定</p>
+		</div>
+		<hr />
+		<!--绑定class(数组语法)-->
+		<div id="listClass">
+			<p v-bind:class="[borderClass,radiusClass,redClass]">普通数组绑定</p>
+			<p v-bind:class="[borderClass,radiusClass,redClass,extraClass?extraClass:'']">数组元素三元绑定</p>
+		</div>
+		<hr />
+		<!--绑定style(对象语法)-->
+		<div id="objectStyle">
+			<p v-bind:style="{color:warnColor,border:borderStyle,borderRadius:'5px'}">对象元素绑定</p>
+			<p v-bind:style="styleObj">对象整体绑定</p>
+		</div>
+		<!--数组语法可以将多个样式对象绑定到同一个元素上-->
+		<div id="listStyle">
+			<p v-bind:style="[borderStyle,backgroundStyle,boxShadow,textShadow]">数组语法绑定多个样式对象</p>
+		</div>
+		<script>
+			new Vue({
+				el:'#objectClass',
+				data:{
+					isBorder:true,
+					isRed:true,
+					classObject:{
+						
+					}
+				},
+				computed:{
+					compClass:function(){
+						return {
+							border:this.isBorder,
+							red:this.isRed,
+							radius:this.isBorder&&this.isRed
+						}
+					}
+				}
+			});
+			
+			new Vue({
+				el:'#listClass',
+				data:{
+					borderClass:'border',
+					radiusClass:'radius',
+					redClass:'red',
+					extraClass:0
+				}
+			});
+			new Vue({
+				el:'#objectStyle',
+				data:{
+					warnColor:'red',
+					borderStyle:'1px solid blue',
+					styleObj:{
+						color:'#fff',
+						backgroundColor:'lightblue',
+						border:'1px soldi lightblue'
+					}
+				}
+			});
+			new Vue({
+				el:'#listStyle',
+				data:{
+					borderStyle:{
+						border:'1px dotted lightblue',
+						fontSize:'1.1em',
+						padding:'10px 0'
+					},
+					backgroundStyle:{
+						backgroundColor:'#ccc',
+						color:'#fff',
+						borderRadius:'5px'
+					},
+					boxShadow:{
+						boxShadow:'2px 2px 2px 2px yellow'
+					},
+					textShadow:{
+						textShadow:'2px 2px 2px cyan'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

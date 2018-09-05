@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalable=no" />
+		<title>vue边界情况</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<!--行内模板-->
+		<div id="inlineTemplate">
+			<news-comp inline-template v-bind:news="news">
+				<div>
+					<p>These are compiled as the component's own template.</p>
+					<p>Not parent's transclusion content.%%%{{news.cont}}</p>
+				</div>
+			</news-comp>
+			<news-comp v-bind:news="news">
+			</news-comp>
+		</div>
+		
+		<!--访问子组件实例或子元素 -->
+		<div id="visitChild">
+			<button type="button" v-on:click="virtualFocus">触发聚焦事件</button>
+			<base-input ref="usernameInput"></base-input>
+		</div>
+		<script>
+			Vue.component('news-comp',{
+				props:['news'],
+				template:`
+					<div>
+						<label>template Title--{{news.title}}</label>
+						<div class="newsCont">
+							template news content--{{news.cont}}
+						</div>
+					</div>
+				`
+			});
+			new Vue({
+				el:'#inlineTemplate',
+				data:{
+					news:{
+						title:'test-title',
+						cont:'test-cont'
+					}
+				}
+			});
+			
+			Vue.component('base-input',{
+				props:[],
+				template:`
+					<input ref="input" />
+				`
+				,
+				methods:{
+					focus:function(){
+						this.$refs.input.focus();
+					}
+				}
+			});
+			new Vue({
+				el:'#visitChild',
+				data:{
+					
+				},
+				methods:{
+					virtualFocus:function(){
+						this.$refs.usernameInput.focus();
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

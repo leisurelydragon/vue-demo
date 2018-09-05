@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum=1,maximum=1,user-scalable=no" />
+		<title>可复用过渡</title>
+		<script type="text/javascript" src="../../js/vue.js" ></script>
+	</head>
+	<body>
+		<div id="tranDemo">
+			
+		</div>
+		<script>
+			Vue.component('my-special-transition', {
+			  functional: true,
+			  render: function (createElement, context) {
+			    var data = {
+			      props: {
+			        name: 'very-special-transition',
+			        mode: 'out-in'
+			      },
+			      on: {
+			        beforeEnter: function (el) {
+			          // ...
+			        },
+			        afterEnter: function (el) {
+			          // ...
+			        }
+			      }
+			    }
+			    return createElement('transition', data, context.children)
+			  }
+			})
+		</script>
+	</body>
+</html>
